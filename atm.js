@@ -1,34 +1,31 @@
 const prompt = require('prompt-sync')();
 
-function getBalance(account){
-    let balanceBuffer = account.balance;
-    return balanceBuffer;
+const account = require('./account');
+
+function getBalance(){
+    return account.balance;
 }
 
-function withdraw(account, userInput){
-    let balance = account.balance;
-    let balanceBuffer = balance - userInput;
-    return balanceBuffer;
+function withdraw(userInput){
+    account.mainAccount.balance = account.mainAccount.balance - userInput;
 }
 
-function deposit(){
-    let balance = account.balance;
-    let balanceBuffer = balance + userInput;
-    return balanceBuffer;
+function deposit(userInput){
+    account.mainAccount.balance = account.mainAccount.balance + userInput;
 }
 
-function validatePin(account){
-    let pinBuffer = prompt("Please enter your PIN: ")();
-    switch(account){
-        case(pinBuffer == account.pin):
+function validatePin(){
+    let pinBuffer = parseInt(prompt("Please enter your PIN: "));
+    switch(pinBuffer){
+        case(account.mainAccount.pin === pinBuffer):
             let pinVerified = true;
             return pinVerified;
-        default:
+        
+        case(account.mainAccount.pin != pinBuffer):
             console.log("Incorrect PIN, please try again");
             validatePin(account);
     }}
 
-const account = require('account.js');
 
 module.exports.getBalance = getBalance;
 module.exports.validatePin = validatePin;
